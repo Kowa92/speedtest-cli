@@ -1320,7 +1320,7 @@ class Speedtest:
                 uh, e = catch_request(request, opener=self._opener)
                 if e:
                     errors.append(f"{e}")
-                    raise ServersRetrievalError()
+                    raise ServersRetrievalError(errors)
 
                 stream = get_response_stream(uh)
 
@@ -1376,7 +1376,7 @@ class Speedtest:
                 break
 
             except ServersRetrievalError:
-                continue
+                raise
 
         if (servers or exclude) and not self.servers:
             raise NoMatchedServers()
